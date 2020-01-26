@@ -1,20 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const app = express();
-
 app.use(bodyParser.json());
-
-//DB config connection
-const db = require('./config/keys').mongoURI;
-
-mongoose
-  .connect(db)
-  .then(() => console.log('MongoDB Connect'))
-  .catch(err => console.log(err))
-
 app.use((req, res, next) => 
-{  
+{
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Headers',
@@ -24,7 +13,7 @@ app.use((req, res, next) =>
     'Access-Control-Allow-Methods',
     'GET, POST, PATCH, DELETE, OPTIONS'
   );
+  res.status(200).send('API Workin');
   next();
 });
-
 app.listen(5000); // start Node + Express server on port 5000

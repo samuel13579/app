@@ -2,13 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb+srv://TestAdmin:Bestpassword135@perryprocesses-tmtzr.mongodb.net/testretryWrites=true&w=majority';
+const url = 'mongodb+srv://TestAdmin:Bestpassword135@perryprocesses-tmtzr.mongodb.net/test?retryWrites=true&w=majority';
 const client = new MongoClient(url);
 client.connect();
 
 const app = express();
 
 app.use(bodyParser.json());
+
 app.use((req, res, next) => 
 {
   res.setHeader('Access-Control-Allow-Origin', '*');

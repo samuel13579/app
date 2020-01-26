@@ -5,6 +5,14 @@ const app = express();
 
 app.use(bodyParser.json());
 
+//DB config connection
+const db = require('./config/keys').mongoURI;
+
+mongoose
+  .connect(db)
+  .then(() => console.log('MongoDB Connect'))
+  .catch(err => console.log(err))
+
 app.use((req, res, next) => 
 {  
   res.setHeader('Access-Control-Allow-Origin', '*');

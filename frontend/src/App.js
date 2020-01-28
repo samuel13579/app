@@ -3,6 +3,7 @@ import LoginCredentials from "./components/LoginCredentials";
 import PassWordBox from "./components/PassWordBox";
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (

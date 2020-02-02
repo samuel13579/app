@@ -11,7 +11,7 @@ const Contact = require('../model/Contact');
 
 router.get('/', (req, res) => {
     Contact.find()
-    .sort({last: -1})
+    .sort({last: 1})
     .then(contact => res.json(contact))
 });
 
@@ -38,7 +38,7 @@ router.post('/add', (req, res) => {
 });
 
 //@route DELETE contacts/:id
-//@desc Get all contacts
+//@desc Delete contact by Mongo ID
 //@access Public
 
 router.delete('/:id', (req, res) => {
@@ -47,5 +47,22 @@ router.delete('/:id', (req, res) => {
         .catch(err => res.status(404).json({success: false}));
 });
 
+//@route POST contacts/edit/:id
+//@desc Edit a contact by Mongo ID
+//@access Public
+
+router.post('/edit/:id', (req, res) => {
+    Contact.findById(req.params.id).then(contact => {
+        contact.first = req.body.first;
+        contact.last = req.body.last;
+        contact.phone = req.body.phone;
+        contact.note = req.body.note;
+
+        contact.save()
+            .then(() => res.json(contact))
+            .catch(err => res.status(404).json(err));
+    })
+    .catch(err => status(404).json(err));
+})
 
 module.exports = router;

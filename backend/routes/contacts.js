@@ -11,7 +11,7 @@ const Contact = require('../model/Contact');
 
 router.get('/', (req, res) => {
     Contact.find()
-    .sort({last: 1})
+    .sort({first: 1})
     .then(contact => res.json(contact))
 });
 
@@ -52,11 +52,37 @@ router.delete('/:id', (req, res) => {
 //@access Public
 
 router.post('/edit/:id', (req, res) => {
+
     Contact.findById(req.params.id).then(contact => {
+
+        var tempFirst = contact.first;
+
+        if(contact.last != null)
+            var tempLast = contact.last;
+        else
+            var tempLast = null;
+        
+        var tempPhone = contact.phone;
+
+        if(contact.note != null)
+            var tempNote = contact.note;
+        else
+            var tempNote = null;
+
         contact.first = req.body.first;
         contact.last = req.body.last;
         contact.phone = req.body.phone;
         contact.note = req.body.note;
+
+        if(req.body.first == null)
+            contact.first = tempFirst;
+        if(req.body.last == null)
+            contact.last = tempLast;
+        if(req.body.phone == null)
+            contact.phone = tempPhone;
+        if(req.body.note == null)
+            contact.note = tempNote;
+
 
         contact.save()
             .then(() => res.json(contact))

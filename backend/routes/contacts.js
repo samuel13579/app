@@ -3,7 +3,7 @@ const router = express.Router();
 
 //contact model
 
-const Contact = require('../../models/Contact');
+const Contact = require('../model/Contact');
 
 //@route GET api/contacts
 //@desc Get all contacts

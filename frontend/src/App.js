@@ -1,9 +1,9 @@
 import React from 'react';
 import LoginCredentials from "./components/LoginCredentials";
+import SignUp from "./components/SignUp";
 import PassWordBox from "./components/PassWordBox";
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={LoginCredentials}/>  
           {/* <Route exact path="/yikes" component={PassWordBox}/>  Hook up next page */}
+          <Route exact path="/signup" component={SignUp}/>
         </Switch>
       </div>
     </BrowserRouter>

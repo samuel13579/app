@@ -26,7 +26,8 @@ router.post('/add', (req, res) => {
         first: req.body.first,
         last: req.body.last,
         phone: req.body.phone,
-        note: req.body.note
+        note: req.body.note,
+        user: req.body.user
     });
 
     console.log(req.body);
@@ -68,11 +69,14 @@ router.post('/edit/:id', (req, res) => {
             var tempNote = contact.note;
         else
             var tempNote = null;
+        
+        var tempUser = contact.user;
 
         contact.first = req.body.first;
         contact.last = req.body.last;
         contact.phone = req.body.phone;
         contact.note = req.body.note;
+        contact.user = req.body.user
 
         if(req.body.first == null)
             contact.first = tempFirst;
@@ -82,6 +86,8 @@ router.post('/edit/:id', (req, res) => {
             contact.phone = tempPhone;
         if(req.body.note == null)
             contact.note = tempNote;
+        if(req.body.user == null)
+            contact.user = tempUser;
 
 
         contact.save()

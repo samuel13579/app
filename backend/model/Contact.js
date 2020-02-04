@@ -15,6 +15,10 @@ const ContactSchema = new Schema ({
     },
     notes: {
         type: String
+    },
+    user: {
+        type: String,
+        requiered: true
     }
 })
 

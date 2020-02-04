@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.json({ message: "API Working" });
 });
 
-app.use("/user", user);
+app.use("/", user);
 app.use("/contacts", contacts)
 
 app.listen(PORT, (req, res) => {

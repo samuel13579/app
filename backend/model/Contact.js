@@ -13,7 +13,7 @@ const ContactSchema = new Schema ({
         type: String,
         required: true
     },
-    notes: {
+    note: {
         type: String
     },
     userid: {

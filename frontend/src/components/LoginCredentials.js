@@ -72,7 +72,7 @@ class LogInCredentials extends Component {
                                     onChange={this.onChangePassword}></Input>
                         </FormGroup>
                         <ButtonGroup>
-                            {/* <Link to ="/contacthub"><Button color="primary" size="lg">Log In</Button>{''}</Link> Hook up next page*/}
+                            <Link to ="/mainpage"><Button color="primary" size="lg">Log In</Button>{''}</Link>
                             <Button color="primary" size="lg">Log In</Button>{''}
                         </ButtonGroup>
                         <div>

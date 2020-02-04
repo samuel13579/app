@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = function(req, res, next) {
   const token = req.header("token");
+  //If the token header is empty return and error
   if (!token) return res.status(401).json({ message: "Auth Error" });
 
   try {
@@ -10,6 +11,7 @@ module.exports = function(req, res, next) {
     next();
   } catch (e) {
     console.error(e);
+    //If the decoded token isnt an actual token, return an error
     res.status(500).send({ message: "Invalid Token" });
   }
 };

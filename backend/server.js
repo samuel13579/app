@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", user);
-app.use("/contacts", contacts)
+app.use("/me/contacts", contacts)
 
 app.listen(PORT, (req, res) => {
   console.log(`Server Started at PORT ${PORT}`);

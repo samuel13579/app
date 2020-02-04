@@ -29,6 +29,7 @@ router.post(
                 });
             }
             
+            //Hashes the passwords
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password.trim(), salt);
             
@@ -39,6 +40,7 @@ router.post(
 
             await user.save();
 
+            //The payload is what we wanna carry over when doing request
             const payload = {
                 user: {
                     id: user.id
@@ -52,6 +54,7 @@ router.post(
                 },
                 (err, token) => {
                     if (err) throw err;
+                    //The token gets returned here
                     res.status(200).json({
                         token
                     });
@@ -63,6 +66,12 @@ router.post(
         }
     }
 );
+
+/**
+ * @method - POST
+ * @param - /login
+ * @description - User Login
+ */
 
 router.post(
     "/login",
@@ -105,6 +114,7 @@ router.post(
                 },
                 (err, token) => {
                     if (err) throw err;
+                    //The token gets returned here
                     res.status(200).json({
                         token
                     });
@@ -128,7 +138,8 @@ router.post(
 
 router.get("/me", auth, async (req, res) => {
     try {
-      // request.user is getting fetched from Middleware after token authentication
+      // request.user is getting fetched from the auth function defined in middleware
+      // after token authentication
       const user = await User.findById(req.user.id);
       res.json(user);
     } catch (e) {

@@ -1,18 +1,31 @@
 const express = require('express');
 const router = express.Router();
+const auth = require("../middleware/auth");
 
 //contact model
 
 const Contact = require('../model/Contact');
+const User = require("../model/User");
 
 //@route GET contacts
 //@desc Get all contacts
 //@access Public
 
-router.get('/', (req, res) => {
-    Contact.find()
-    .sort({first: 1})
-    .then(contact => res.json(contact))
+router.get('/', auth, async(req, res) => {
+
+    try {
+        // request.user is getting fetched from Middleware after token authentication
+        const user = await User.findById(req.user.id);
+
+        Contact.find({userid: user.id})
+            .sort({first: 1})
+            .then(contact => res.json(contact))
+        //res.json(user);
+      } catch (e) {
+        res.send({ message: "Error in Fetching user" });
+      }
+
+ 
 });
 
 //@route POST contacts/add
@@ -27,7 +40,7 @@ router.post('/add', (req, res) => {
         last: req.body.last,
         phone: req.body.phone,
         note: req.body.note,
-        user: req.body.user
+        userid: req.body.userid
     });
 
     console.log(req.body);
@@ -70,13 +83,13 @@ router.post('/edit/:id', (req, res) => {
         else
             var tempNote = null;
         
-        var tempUser = contact.user;
+        var tempUser = contact.userid;
 
         contact.first = req.body.first;
         contact.last = req.body.last;
         contact.phone = req.body.phone;
         contact.note = req.body.note;
-        contact.user = req.body.user
+        contact.userid = req.body.userid;
 
         if(req.body.first == null)
             contact.first = tempFirst;
@@ -86,8 +99,8 @@ router.post('/edit/:id', (req, res) => {
             contact.phone = tempPhone;
         if(req.body.note == null)
             contact.note = tempNote;
-        if(req.body.user == null)
-            contact.user = tempUser;
+        if(req.body.userid == null)
+            contact.userid = tempUser;
 
 
         contact.save()

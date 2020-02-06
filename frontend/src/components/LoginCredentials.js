@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Container, FormGroup, Label, Input, Button, Fade, ButtonGroup, Jumbotron, Badge } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { Alert } from 'react-bootstrap';
+
+var token = '';
+var errorMsg = '';
 
 class LogInCredentials extends Component {
 
@@ -33,17 +38,22 @@ class LogInCredentials extends Component {
     onLogin(e){
         e.preventDefault();
 
-        console.log('Login clicked.');
-        console.log('Username is ', this.state.username);
-        console.log('Password is ', this.state.password);
-
         const loginDetails = {
-            login_username: this.state.username,
-            login_password: this.state.password
+            username: this.state.username,
+            password: this.state.password
         };
+
+        axios.post("http://localhost:5000/login", loginDetails).then(res => token = res.data.token)
+                .catch(error => errorMsg = error.response.data.message);
+
+        if (token)
+        {
+            window.location.href="/mainpage";
+        }
     }
 
     render() {
+ 
         return(
             <div>
                 <Container>
@@ -57,7 +67,7 @@ class LogInCredentials extends Component {
                         </div>
                     </Fade>
 
-                    <Form onSubmit={this.onLogin}>
+                    <Form>
                         <br></br>
                         <Fade in={true}>
                         <FormGroup>
@@ -73,7 +83,7 @@ class LogInCredentials extends Component {
                         </FormGroup>
                         <ButtonGroup>
                             <Link to ="/mainpage">
-                                <Button color="primary" size="lg">Log In</Button>{''}
+                                <Button color="primary" size="lg" onClick={this.onLogin}>Log In</Button>{''}
                             </Link>
                         </ButtonGroup>
                         <div>

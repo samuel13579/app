@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Form, Container, FormGroup, Label, Input, Button, UncontrolledCarousel, ButtonGroup, Jumbotron, Fade } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Alert, Form, Container, FormGroup, Label, Input, Button, UncontrolledCarousel, ButtonGroup, Jumbotron, Fade } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
+
+var token = '';
+var errorMsg = '';
 
 class SignUp extends Component {
 
@@ -10,7 +14,7 @@ class SignUp extends Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
         }
 
         this.onChangeUsername = this.onChangeUsername.bind(this);
@@ -29,30 +33,29 @@ class SignUp extends Component {
             password: e.target.value
         });
     }
+
+    stuff(e){
+        console.log(token);
+    }
     
     onSignUp(e){
         e.preventDefault();
 
-        console.log('Login clicked.');
+        console.log('SignUp clicked.');
         console.log('Username is ', this.state.username);
         console.log('Password is ', this.state.password);
 
         const loginDetails = {
-            login_username: this.state.username,
-            login_password: this.state.password
+            username: this.state.username,
+            password: this.state.password
         };
 
-        axios.post("http://localhost:5000/signup", loginDetails).then(res=> console.log(res.data));
-
-        this.setState({
-            username: '',
-            password: ''
-        })
+        axios.post("http://localhost:5000/signup", loginDetails).then(res => token = res.data.token)
+                .catch(error => errorMsg = error.response.data.msg);
     }
 
     render() {
         return (
-
             <Fade in={true}>
                 <Container> 
                     <div className='jumbotron bg-dark text-white'>
@@ -73,14 +76,13 @@ class SignUp extends Component {
                         </div>
                         <div>
                             <ButtonGroup>
-                                {/* <Link to ="/contacthub"><Button color="primary" size="lg">Log In</Button>{''}</Link> Hook up next page*/}
+                                {/* <Link to ="/"><Button color="primary" size="lg">Log In</Button>{''}</Link> Hook up next page */}
                                 <Button color="primary" size="lg" onClick={this.onSignUp}>Sign Up</Button>{''}
                             </ButtonGroup>
                         </div>
                     </Form>
                 </Container>
-            </Fade>
-
+            </Fade> 
         )
     }
 }

@@ -7,7 +7,7 @@ const auth = require("../middleware/auth");
 const Contact = require('../model/Contact');
 const User = require("../model/User");
 
-//@route GET contacts
+//@route GET me/contacts
 //@desc Get all contacts
 //@access Public
 
@@ -28,7 +28,7 @@ router.get('/', auth, async(req, res) => {
  
 });
 
-//@route POST contacts/add
+//@route POST me/contacts/add
 //@desc Add a contact
 //@access Public
 
@@ -51,7 +51,7 @@ router.post('/add', (req, res) => {
     
 });
 
-//@route DELETE contacts/:id
+//@route DELETE me/contacts/:id
 //@desc Delete contact by Mongo ID
 //@access Public
 
@@ -61,7 +61,7 @@ router.delete('/:id', (req, res) => {
         .catch(err => res.status(404).json({success: false}));
 });
 
-//@route POST contacts/edit/:id
+//@route POST me/contacts/edit/:id
 //@desc Edit a contact by Mongo ID
 //@access Public
 

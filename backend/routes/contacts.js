@@ -34,8 +34,30 @@ router.get('/', auth, async(req, res) => {
 
 router.post('/add', (req, res) => {
 
+    if(req.body.first == null)
+    {
+        req.body.first = "";
+    }
+    if(req.body.last == null)
+    {
+        req.body.last = "";
+    }
+    if(req.body.phone == null)
+    {
+        req.body.phone = "";
+    }
+    if(req.body.note == null)
+    {
+        req.body.note = "";
+    }
+    if(req.body.userid == null)
+    {
+        req.body.userid = "";
+    }
 
     const newContact = new Contact({
+        
+
         first: req.body.first,
         last: req.body.last,
         phone: req.body.phone,
@@ -94,14 +116,14 @@ router.post('/edit/:id', (req, res) => {
         if(contact.last != null)
             var tempLast = contact.last;
         else
-            var tempLast = null;
+            var tempLast = "";
         
         var tempPhone = contact.phone;
 
         if(contact.note != null)
             var tempNote = contact.note;
         else
-            var tempNote = null;
+            var tempNote = "";
         
         var tempUser = contact.userid;
 

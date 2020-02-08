@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
+import axios from 'axios';
+
 var products =
     [
         {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5","phone":"3434343434343","__v":{"$numberInt":"0"},"user":"igor"},
@@ -43,12 +45,18 @@ var columns =
             mode: 'radio',
             clickToSelect: true
           };
-          
+
+// function getContacts(){
+
+//     axios.get("http://localhost:5000/me/contacts", )
+// }
 
 class ContactList extends Component
 {
     render()
     {
+        // const tableData = getContacts();
+
         return(
         <BootstrapTable selectRow={selectRow} keyField='_id' data={products} columns={columns}/>
         )

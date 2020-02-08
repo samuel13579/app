@@ -61,6 +61,26 @@ router.delete('/:id', (req, res) => {
         .catch(err => res.status(404).json({success: false}));
 });
 
+//@route GET me/contacts/search
+//@desc Search through contacts
+//@access Public
+
+router.get('/search', (req, res) => {
+    var search = new RegExp(req.body.search, 'ig');
+    Contact.aggregate()
+    .project({
+        fullName: {$concat: ['$first',' ','$last']},
+        first: 1,
+        last: 1,
+        phone: 1,
+        note: 1,
+        userid: 1
+    })
+    .match({fullName: search})
+    .then(contact => res.json(contact))
+});
+
+
 //@route POST me/contacts/edit/:id
 //@desc Edit a contact by Mongo ID
 //@access Public

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Label, Input, Button } from 'reactstrap';
+import { Input, Button } from 'reactstrap';
 import axios from 'axios';
+import '../App.css';
 
 class Add extends React.Component
 {
@@ -61,10 +62,10 @@ class Add extends React.Component
             <div id="addDiv">
                 <form>
                 <br/>
-                <Label>Add Contact</Label>
-                <Input type="text" id="firstname" placeholder="First Name" onChange={this.onFirstChange}></Input>
-                <Input type="text" id="lastname" placeholder="Last Name" onChange={this.onLastChange}></Input>
-                <Input type="text" id="phone" placeholder="Phone #" onChange={this.onNumberChange}></Input>
+                <h1 className="AddTitle">Add Contact</h1><br/>
+                <Input type="text" id="firstname" placeholder="First Name" onChange={this.onFirstChange}></Input> <br/>
+                <Input type="text" id="lastname" placeholder="Last Name" onChange={this.onLastChange}></Input> <br/>
+                <Input type="text" id="phone" placeholder="Phone #" onChange={this.onNumberChange}></Input> <br/>
                 <Input type="text" id="notes" placeholder="Notes" onChange={this.onNotesChange}></Input><br/>
                 <Button outline color = 'info' onClick={this.onAdd}>Submit</Button>
                 </form>

@@ -1,65 +1,133 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider from 'react-bootstrap-table2-toolkit';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import { tablePaging, selectRow, cellEdit, nullChecker, rowEvents} from './Paging';
+import {View} from 'react-native';
+import { Input, Button } from 'reactstrap';
 import axios from 'axios';
+import '../App.css';
 
-var products =
-    [
-        {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5","phone":"3434343434343","__v":{"$numberInt":"0"},"user":"igor"},
-        {"_id":{"$oid":"5e36497fc2a12d17ccf067fa"},"first":"IVAN","last":"QT","phone":"123-696-4207","__v":{"$numberInt":"0"},"user":"diego"},
-        {"_id":{"$oid":"5e36449494e39914677fa88b"},"first":"Timmy","last":"Jones","phone":"420-777-6969","__v":{"$numberInt":"0"},"user":"diego"},
-        {"_id":{"$oid":"5e3737f68ec706735b7cc46c"},"first":"OkayPLease","phone":"TestPhone","__v":{"$numberInt":"0"},"last":"asdf"}
-    ]
-var columns = 
-        [
-            {
-                text: 'ID',
-                dataField: '_id',
-                hidden: true
-            },
-            {
-                text: 'First Name',
-                dataField: 'first'
-            },
-            {
-                text: 'Last Name',
-                dataField: 'last'
-            },
-            {
-                text: 'Phone #',
-                dataField: 'phone'
-            },
-            {
-                text: 'Contact',
-                dataField: 'contact',
-                hidden: true
+class ContactList extends Component{
+    constructor() {
+        super();
+        this.state = {
+            products: 
+            [
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+                {"_id":{"$oid":"5e36449494e39914677fa88a"},"first":"Timmy part 5", "last":"", "phone":"3434343434343","__v":{"$numberInt":"0"}, "notes":"fuck you","user":"igor"},
+            ],
+            columns: [
+                {
+                    text: 'ID',
+                    dataField: '_id',
+                    editable: false,
+                    hidden: true
+                },
+                {
+                    text: 'First Name',
+                    dataField: 'first',
+                    formatter: nullChecker,
+                    editable: true,
+                },
+                {
+                    text: 'Last Name',
+                    dataField: 'last',
+                    default: "",
+                    editable: true,
+                },
+                {
+                    text: 'Phone #',
+                    dataField: 'phone',
+                    formatter: nullChecker,
+                    editable: true,
+                },
+                {
+                    text: 'Contact',
+                    dataField: 'contact',
+                    formatter: nullChecker,
+                    hidden: true
+    
+                },
+                {
+                    text: 'Notes',
+                    dataField: 'notes',
+                    formatter: nullChecker,
+                    editable: true,
+                },
+        ],
+        firstname: '',
+        lastname: ''
+      };
+      this.onFirstSearchChange = this.onFirstSearchChange.bind(this);
+      this.onLastSearchChange = this.onLastSearchChange.bind(this);
+    }
 
-            },
-            {
-                text: 'Notes',
-                dataField: 'notes'
-            }
-        ]
+    onFirstSearchChange(e){
+        this.setState({
+            firstname: e.target.value
+        });
+    }
+    
+    onLastSearchChange(e){
+        this.setState({
+            lastname: e.target.value
+        });
+    }
 
-        const selectRow = {
-            mode: 'radio',
-            clickToSelect: true
-          };
-
-// function getContacts(){
-
-//     axios.get("http://localhost:5000/me/contacts", )
-// }
-
-class ContactList extends Component
-{
-    render()
-    {
-        // const tableData = getContacts();
-
-        return(
-        <BootstrapTable selectRow={selectRow} keyField='_id' data={products} columns={columns}/>
-        )
+    render() {
+        return (
+            <div className='ContactListDiv' onContextMenu={(e)=> e.preventDefault()}>
+                <View style={{flexDirection:"row"}}>
+                    <View style={{flex:1}, {width:200 + "px"}, {marginRight:10 + "px"}}>
+                        <Input type="text" id="firstname" placeholder="First Name" onChange={this.onFirstSearchChange} style={{justifyContent: 'flex-start',}}></Input><br/>
+                    </View>
+                    <View style={{flex:1}, {width:200 + "px"}}>
+                        <Input type="text" id="lastname" placeholder="Last Name" onChange={this.onLastSearchChange}></Input><br/>
+                    </View>
+                    <View style={{flex:1}, {width:200 + "px"}, {marginLeft:10 + "px"}}>
+                        <Button outline color = 'info' style={{justifyContent: 'flex-end'}}>Search</Button>
+                    </View>
+                </View>
+                <br></br>
+                <BootstrapTable
+                    striped
+                    hover
+                    keyField='_id'
+                    data={this.state.products}
+                    columns={this.state.columns}
+                    pagination={tablePaging}
+                    selectRow={selectRow}
+                    rowEvents={rowEvents}
+                    cellEdit={cellEdit}
+                />
+            </div>
+        );
     }
 }
 export default ContactList;

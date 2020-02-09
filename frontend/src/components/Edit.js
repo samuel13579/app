@@ -1,3 +1,6 @@
+/* 
+THIS ISN'T USED ANYMORE BUT IM KEEPING IT FOR GIGGLES
+*/
 import React from 'react';
 import { Form, Container, FormGroup, Label, Alert, Input, Button, Fade, ButtonGroup, Jumbotron, Badge, UncontrolledAlert } from 'reactstrap';
 

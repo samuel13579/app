@@ -1,3 +1,6 @@
+/* 
+THIS ISN'T USED ANYMORE BUT IM KEEPING IT FOR GIGGLES
+*/
 import React from 'react';
 import Edit from '../components/Edit';
 import Add from '../components/Add';

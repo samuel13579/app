@@ -17,7 +17,7 @@ function UserAlertBanner(props){
     {
         return (
             <div>
-                <UncontrolledAlert color='warning' fade = {true}>The username you've entered does not exist.</UncontrolledAlert>
+                <Alert color='warning'>The username you've entered does not exist.</Alert>
             </div>
         );
     }
@@ -27,9 +27,6 @@ function UserAlertBanner(props){
 
 function PassAlertBanner(props){
 
-    const [visible, setVisible] = useState(true);
-    const onDismiss = () => setVisible(false);
-
     if (!props.alert){
         return null;
     }
@@ -38,7 +35,7 @@ function PassAlertBanner(props){
     {
         return (
             <div>
-                <Alert color='warning' fade = {true} isOpen={visible} toggle={onDismiss}>The password you've entered is inccorect.</Alert>
+                <Alert color='warning'>The password you've entered is inccorect.</Alert>
             </div>
         );
     }
@@ -77,15 +74,16 @@ class LogInCredentials extends Component {
         });
     }
 
-    onLogin(e){
-        e.preventDefault();
+
+    async onLogin(){
 
         const loginDetails = {
             username: this.state.username,
             password: this.state.password
         };
 
-        axios.post("http://localhost:5000/login", loginDetails).then(res => token = res.data.token)
+        axios.post("http://localhost:5000/login", loginDetails)
+                .then(res => this.props.callback(res.data.token))
                 .catch(error => errorMsg = error.response.data.message);
 
         this.setState({
@@ -113,14 +111,8 @@ class LogInCredentials extends Component {
                     passError: true
                 })
             }
-        }
 
-        this.props.callback(token);
-
-        if (token)
-        {
-            console.log("Token in LOGIN is ", token);
-            window.location.href="/mainpage";
+            return null;
         }
     }
 

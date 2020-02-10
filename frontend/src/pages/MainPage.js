@@ -9,19 +9,17 @@ class MainPage extends Component
     constructor(props){
         super(props);
 
-        this.state = {please: this.props.token}
+        this.state = {userToken: ''};
 
-        console.log("Test is ", this.props.test);
-        console.log("Constructor token is ", this.props.token);
+        this.setState({userToken: this.props.token});
     }
 
     render()
     {
-        const userToken = this.props.token;
 
         return(
             <div id='MainPageDiv'>
-                <NavigationBar token={userToken}></NavigationBar>
+                <NavigationBar token={this.props.token}></NavigationBar>
                 <SplitPane
                 split="vertical"
                 minSize={50}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import axios from 'axios';
+import cellEditFactory from 'react-bootstrap-table2-editor';
 
 var products =
     [
@@ -58,7 +59,7 @@ class ContactList extends Component
         // const tableData = getContacts();
 
         return(
-        <BootstrapTable selectRow={selectRow} keyField='_id' data={products} columns={columns}/>
+            <BootstrapTable selectRow={selectRow} keyField='_id' data={products} columns={columns} cellEdit = {cellEditFactory({ mode: 'click' })}/>
         )
     }
 }
